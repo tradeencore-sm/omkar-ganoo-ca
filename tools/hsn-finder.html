@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HSN &amp; SAC Code Finder — GST Rates 2026 | CA Omkar Ganoo</title>
+<meta name="description" content="Search HSN and SAC codes with current GST rates under GST 2.0 — the Nil, 5%, 18% and 40% slabs effective 22 September 2025. A quick reference for invoicing." />
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<script src="/site.config.js"></script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark">OG</span>
+      <span class="brand-text"><strong>CA Omkar Ganoo</strong><em>Chartered Accountant</em></span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="/#about">About</a>
+      <a href="/#services">Services</a>
+      <a href="/#cfo">Virtual CFO</a>
+      <a href="/#tools" class="active">Tools</a>
+      <a href="/#contact" class="nav-cta">Get in touch</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="tool-hero">
+    <div class="wrap">
+      <p class="crumb"><a href="/">Home</a> &nbsp;/&nbsp; <a href="/#tools">Tools</a> &nbsp;/&nbsp; HSN &amp; SAC finder</p>
+      <h1>HSN &amp; SAC Code Finder</h1>
+      <p class="sub">Search by code or description for the GST rate under GST&nbsp;2.0 — the
+        Nil, 5%, 18% and 40% structure in force since 22&nbsp;September&nbsp;2025, when the
+        12% and 28% slabs were withdrawn.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+
+      <div class="search-bar">
+        <label for="q" class="skip">Search HSN or SAC codes</label>
+        <input type="text" id="q" placeholder="Try &ldquo;cement&rdquo;, &ldquo;8517&rdquo;, &ldquo;audit&rdquo; or &ldquo;footwear&rdquo;" autocomplete="off" />
+      </div>
+
+      <div class="filters" id="rateFilters" role="group" aria-label="Filter by GST rate"></div>
+      <div class="filters" id="catFilters" role="group" aria-label="Filter by category"></div>
+
+      <p class="count" id="count"></p>
+      <ul class="hsn-list" id="list"></ul>
+
+      <div class="disclaimer">
+        <strong>Indicative reference only.</strong> Classification under the Customs Tariff
+        drives the rate, and many entries turn on packaging, the value of the item, or the
+        end use — the conditions noted against a row are summaries, not the full entry.
+        Rates also change by notification. Confirm the exact rate on the GST portal's
+        <a href="https://services.gst.gov.in/services/searchhsnsac" target="_blank" rel="noopener noreferrer">HSN/SAC search</a>
+        or the <a href="https://cbic-gst.gov.in/gst-goods-services-rates.html" target="_blank" rel="noopener noreferrer">CBIC rate finder</a>
+        before you raise an invoice. This page is not tax advice.
+        <span id="discContact"></span>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <p class="f-name">CA Omkar Ganoo</p>
+      <p class="f-role">Chartered Accountant &middot; Virtual CFO, Tax, Audit &amp; Advisory</p>
+    </div>
+    <nav class="f-links" aria-label="Footer">
+      <a href="/#about">About</a>
+      <a href="/#services">Services</a>
+      <a href="/#cfo">Virtual CFO</a>
+      <a href="/tools/income-tax-calculator">Tax calculator</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </div>
+  <div class="wrap footer-base"><p>&copy; <span id="year"></span> Omkar V. Ganoo. All rights reserved.</p></div>
+</footer>
+
+<script src="/tools/hsn-data.js"></script>
+<script src="/script.js"></script>
+<script>
+(function(){
+  "use strict";
+  var DATA = window.HSN_DATA || [];
+  var q          = document.getElementById("q");
+  var list       = document.getElementById("list");
+  var countEl    = document.getElementById("count");
+  var rateBox    = document.getElementById("rateFilters");
+  var catBox     = document.getElementById("catFilters");
+
+  var activeRate = null;
+  var activeCat  = null;
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+    });
+  }
+
+  function rateLabel(r){ return r === 0 ? "Nil" : r + "%"; }
+  function rateClass(r){
+    if (r === 0)  return "r-nil";
+    if (r === 5)  return "r-5";
+    if (r === 18) return "r-18";
+    if (r === 40) return "r-40";
+    return "r-sp";
+  }
+
+  /* ---- Build filter chips ------------------------------------------------ */
+  var rates = [];
+  DATA.forEach(function(d){ if (rates.indexOf(d.rate) === -1) rates.push(d.rate); });
+  rates.sort(function(a,b){ return a-b; });
+
+  rateBox.innerHTML = rates.map(function(r){
+    return '<button type="button" class="chip" data-rate="' + r + '" aria-pressed="false">' +
+           rateLabel(r) + '</button>';
+  }).join("");
+
+  var cats = [];
+  DATA.forEach(function(d){ if (cats.indexOf(d.cat) === -1) cats.push(d.cat); });
+  cats.sort();
+  catBox.innerHTML = cats.map(function(c){
+    return '<button type="button" class="chip" data-cat="' + esc(c) + '" aria-pressed="false">' +
+           esc(c) + '</button>';
+  }).join("");
+
+  function wireChips(box, key, get, set){
+    box.addEventListener("click", function(e){
+      var btn = e.target.closest(".chip");
+      if (!btn) return;
+      var val = btn.getAttribute(key);
+      set(get() === val ? null : val);
+      Array.prototype.forEach.call(box.querySelectorAll(".chip"), function(c){
+        c.setAttribute("aria-pressed", String(c.getAttribute(key) === get()));
+      });
+      render();
+    });
+  }
+  wireChips(rateBox, "data-rate", function(){ return activeRate; }, function(v){ activeRate = v; });
+  wireChips(catBox,  "data-cat",  function(){ return activeCat;  }, function(v){ activeCat  = v; });
+
+  /* ---- Render ------------------------------------------------------------ */
+  function render(){
+    var term = q.value.trim().toLowerCase();
+    var out = DATA.filter(function(d){
+      if (activeRate !== null && String(d.rate) !== activeRate) return false;
+      if (activeCat  !== null && d.cat !== activeCat) return false;
+      if (!term) return true;
+      return d.code.toLowerCase().indexOf(term) !== -1 ||
+             d.desc.toLowerCase().indexOf(term) !== -1 ||
+             d.cat.toLowerCase().indexOf(term)  !== -1 ||
+             (d.note ? d.note.toLowerCase().indexOf(term) !== -1 : false);
+    });
+
+    countEl.textContent = out.length === DATA.length
+      ? DATA.length + " entries"
+      : out.length + " of " + DATA.length + " entries";
+
+    if (!out.length){
+      list.innerHTML = '<li class="empty"><p>No match for &ldquo;' + esc(q.value) + '&rdquo;.</p>' +
+        '<p>Try a broader word, or search the official ' +
+        '<a href="https://services.gst.gov.in/services/searchhsnsac" target="_blank" rel="noopener noreferrer">GST portal HSN/SAC tool</a>.</p></li>';
+      return;
+    }
+
+    list.innerHTML = out.map(function(d){
+      return '<li class="hsn-item">' +
+        '<span class="hsn-code">' + esc(d.code) +
+          '<span class="hsn-kind">' + (d.kind === "services" ? "SAC" : "HSN") + '</span>' +
+        '</span>' +
+        '<span class="hsn-desc">' + esc(d.desc) +
+          (d.note ? '<span class="hsn-note">' + esc(d.note) + '</span>' : '') +
+        '</span>' +
+        '<span class="hsn-rate ' + rateClass(d.rate) + '">' + rateLabel(d.rate) + '</span>' +
+      '</li>';
+    }).join("");
+  }
+
+  q.addEventListener("input", render);
+
+  var S = window.SITE || {};
+  if (S.email){
+    document.getElementById("discContact").innerHTML =
+      ' If a classification is genuinely borderline, <a href="/#contact">ask me</a>.';
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

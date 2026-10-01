@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Income Tax Calculator FY 2026-27 (AY 2027-28) — CA Omkar Ganoo</title>
+<meta name="description" content="Free income tax calculator for FY 2026-27 (AY 2027-28). Compare the new and old regimes, with standard deduction, Section 87A rebate, marginal relief, surcharge and cess." />
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<script src="/site.config.js"></script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark">OG</span>
+      <span class="brand-text"><strong>CA Omkar Ganoo</strong><em>Chartered Accountant</em></span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="/#about">About</a>
+      <a href="/#services">Services</a>
+      <a href="/#cfo">Virtual CFO</a>
+      <a href="/#tools" class="active">Tools</a>
+      <a href="/#contact" class="nav-cta">Get in touch</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="tool-hero">
+    <div class="wrap">
+      <p class="crumb"><a href="/">Home</a> &nbsp;/&nbsp; <a href="/#tools">Tools</a> &nbsp;/&nbsp; Income tax calculator</p>
+      <h1>Income Tax Calculator</h1>
+      <p class="sub">FY 2026-27 &middot; AY 2027-28. Compares the new and old regimes side by side,
+        including standard deduction, the Section&nbsp;87A rebate with marginal relief,
+        surcharge and health &amp; education cess.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap tool-grid">
+
+      <form class="panel" id="taxForm" autocomplete="off">
+        <h2>Your details</h2>
+
+        <div class="field">
+          <label for="income">Total annual income</label>
+          <div class="input-rupee">
+            <input type="text" id="income" inputmode="numeric" value="12,00,000" />
+          </div>
+          <p class="hint">Gross salary or total income before any deduction.</p>
+        </div>
+
+        <div class="field">
+          <label id="lblSource">Income source</label>
+          <div class="seg" role="group" aria-labelledby="lblSource">
+            <input type="radio" name="source" id="srcSalary" value="salary" checked />
+            <label for="srcSalary">Salary / pension</label>
+            <input type="radio" name="source" id="srcOther" value="other" />
+            <label for="srcOther">Business / other</label>
+          </div>
+          <p class="hint">Standard deduction applies to salary and pension only.</p>
+        </div>
+
+        <div class="field">
+          <label for="age">Age (old regime)</label>
+          <select id="age">
+            <option value="below60">Below 60 years</option>
+            <option value="senior">60 to below 80 — senior citizen</option>
+            <option value="superSenior">80 years and above — super senior</option>
+          </select>
+          <p class="hint">Changes the basic exemption limit under the old regime only.</p>
+        </div>
+
+        <div class="field">
+          <label for="deductions">Deductions claimed (old regime)</label>
+          <div class="input-rupee">
+            <input type="text" id="deductions" inputmode="numeric" value="0" />
+          </div>
+          <p class="hint">Total of 80C, 80D, 80CCD(1B), home-loan interest under 24(b) and
+            other Chapter VI-A claims. The new regime does not allow these.</p>
+        </div>
+      </form>
+
+      <div id="results">
+        <div class="compare-grid" id="cmpGrid"></div>
+        <div class="verdict" id="verdict"></div>
+        <h2 style="margin:40px 0 18px; font-size:1.3rem;" id="bdTitle">Breakdown</h2>
+        <div class="breakdown" id="breakdown"></div>
+        <div class="disclaimer">
+          <strong>Indicative only.</strong> This calculator applies the slab rates,
+          standard deduction, Section&nbsp;87A rebate, surcharge and cess for FY&nbsp;2026-27
+          to the figures you enter. It does not handle capital gains taxed at special rates,
+          income from more than one house property, clubbing, set-off of losses, foreign
+          income or relief under Sections&nbsp;89, 90 or 91. It is not tax advice and does not
+          create a client relationship.
+          <span id="discContact"></span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <p class="f-name">CA Omkar Ganoo</p>
+      <p class="f-role">Chartered Accountant &middot; Virtual CFO, Tax, Audit &amp; Advisory</p>
+    </div>
+    <nav class="f-links" aria-label="Footer">
+      <a href="/#about">About</a>
+      <a href="/#services">Services</a>
+      <a href="/#cfo">Virtual CFO</a>
+      <a href="/tools/hsn-finder">HSN finder</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </div>
+  <div class="wrap footer-base"><p>&copy; <span id="year"></span> Omkar V. Ganoo. All rights reserved.</p></div>
+</footer>
+
+<script src="/tools/tax-engine.js"></script>
+<script src="/script.js"></script>
+<script>
+(function(){
+  "use strict";
+  var E = window.TaxEngine;
+
+  function inr(n){
+    var s = Math.round(Math.abs(n)).toString(), last3 = s.slice(-3), rest = s.slice(0,-3);
+    if (rest) last3 = "," + last3;
+    rest = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+    return (n < 0 ? "-" : "") + "₹" + rest + last3;
+  }
+  function parseNum(v){ return Number(String(v).replace(/[^\d]/g,"")) || 0; }
+  function fmtInput(el){
+    var n = parseNum(el.value);
+    el.value = n ? n.toLocaleString("en-IN") : "0";
+  }
+
+  var income     = document.getElementById("income");
+  var deductions = document.getElementById("deductions");
+  var age        = document.getElementById("age");
+  var cmpGrid    = document.getElementById("cmpGrid");
+  var verdict    = document.getElementById("verdict");
+  var breakdown  = document.getElementById("breakdown");
+  var bdTitle    = document.getElementById("bdTitle");
+
+  function row(k, v, cls){
+    return '<div class="row ' + (cls||"") + '"><span class="k">' + k +
+           '</span><span class="v">' + v + '</span></div>';
+  }
+
+  function render(){
+    var salaried = document.getElementById("srcSalary").checked;
+    var input = {
+      grossIncome: parseNum(income.value),
+      salaried: salaried,
+      age: age.value,
+      deductions: parseNum(deductions.value)
+    };
+    var c = E.compare(input);
+    var win = c[c.better];
+    var lose = c[c.better === "new" ? "old" : "new"];
+
+    cmpGrid.innerHTML =
+      ['new','old'].map(function(k){
+        var r = c[k];
+        var isWin = c.better === k;
+        return '<div class="cmp' + (isWin ? ' win' : '') + '">' +
+          '<p class="c-reg">' + (k === "new" ? "New regime" : "Old regime") + '</p>' +
+          '<p class="c-amt">' + inr(r.totalTax) + '</p>' +
+          (isWin ? '<span class="c-tag">Lower tax</span>' : '') +
+        '</div>';
+      }).join("");
+
+    if (c.saving === 0){
+      verdict.innerHTML = '<strong>Both regimes give the same tax</strong> on these figures.';
+    } else {
+      verdict.innerHTML = '<strong>The ' + (c.better === "new" ? "new" : "old") +
+        ' regime is cheaper by ' + inr(c.saving) + '</strong> on these figures' +
+        (c.better === "old"
+          ? ' — because the deductions you entered outweigh the new regime’s lower slab rates.'
+          : (input.deductions > 0
+              ? ' — even after the deductions you entered.'
+              : '. Add your Chapter VI-A deductions above to test the old regime properly.'));
+    }
+
+    bdTitle.textContent = "Breakdown — " + (c.better === "new" ? "new" : "old") + " regime";
+
+    var html = "";
+    html += row("Total income", inr(win.grossIncome));
+    if (win.standardDeduction) html += row("Less: standard deduction", "− " + inr(win.standardDeduction), "sub");
+    if (win.otherDeductions)   html += row("Less: Chapter VI-A deductions", "− " + inr(win.otherDeductions), "sub");
+    html += row("Taxable income", inr(win.taxableIncome), "total");
+    html += row("Tax on taxable income", inr(win.taxBeforeRebate));
+    if (win.rebate) {
+      html += row("Less: rebate u/s 87A" + (win.rebateMarginalRelief ? " (marginal relief)" : ""),
+                  "− " + inr(win.rebate), "sub credit");
+    }
+    if (win.surcharge) {
+      html += row("Surcharge @ " + (win.surchargeRate*100) + "%", inr(win.surcharge), "sub");
+      if (win.surchargeMarginalRelief)
+        html += row("Marginal relief on surcharge", "− " + inr(win.surchargeMarginalRelief), "sub credit");
+    }
+    html += row("Health &amp; education cess @ 4%", inr(win.cess), "sub");
+    html += row("Total tax payable", inr(win.totalTax), "total");
+    html += row("Effective rate on total income", win.effectiveRate.toFixed(2) + "%", "sub");
+    html += row("Income after tax", inr(win.takeHome), "sub");
+    breakdown.innerHTML = html;
+  }
+
+  [income, deductions].forEach(function(el){
+    el.addEventListener("input", render);
+    el.addEventListener("blur", function(){ fmtInput(el); render(); });
+  });
+  age.addEventListener("change", render);
+  Array.prototype.forEach.call(document.querySelectorAll("input[name=source]"), function(r){
+    r.addEventListener("change", render);
+  });
+  document.getElementById("taxForm").addEventListener("submit", function(e){ e.preventDefault(); });
+
+  var S = window.SITE || {};
+  if (S.email){
+    document.getElementById("discContact").innerHTML =
+      ' For a computation you can rely on, <a href="/#contact">get in touch</a>.';
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
