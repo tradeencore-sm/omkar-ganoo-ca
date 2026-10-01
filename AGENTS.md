@@ -92,7 +92,7 @@ neighbouring code.
 
 ## Contact
 
-- **Email:** omkarganoo@yahoo.com
+- **Email:** omkar@omkarganoo.com
 - **Phone:** +91 84120 09546
 - **LinkedIn:** https://www.linkedin.com/in/caomkarganoo
 - **Based in:** Chiplun and Pune, Maharashtra; serves clients across India
