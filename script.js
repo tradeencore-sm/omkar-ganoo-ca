@@ -1,46 +1,9 @@
 (function () {
   "use strict";
 
-  var S = window.SITE || {};
-
   /* ---- Year ------------------------------------------------------------ */
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-  /* ---- Contact cards (driven by site.config.js) ------------------------ */
-  function card(label, value, href) {
-    var tag = href ? "a" : "div";
-    var el = document.createElement(tag);
-    el.className = "contact-card";
-    if (href) {
-      el.href = href;
-      if (href.indexOf("http") === 0) {
-        el.target = "_blank";
-        el.rel = "noopener noreferrer";
-      }
-    }
-    el.innerHTML =
-      '<span class="c-label"></span><span class="c-value"></span>';
-    el.querySelector(".c-label").textContent = label;
-    el.querySelector(".c-value").textContent = value;
-    return el;
-  }
-
-  var grid = document.getElementById("contactGrid");
-  if (grid) {
-    if (S.email) grid.appendChild(card("Email", S.email, "mailto:" + S.email));
-    if (S.phone) {
-      grid.appendChild(
-        card("Phone", S.phone, "tel:" + S.phone.replace(/[^\d+]/g, ""))
-      );
-    }
-    if (S.linkedin) grid.appendChild(card("LinkedIn", "View profile", S.linkedin));
-    if (S.address) grid.appendChild(card("Office", S.address));
-    else if (S.city) grid.appendChild(card("Based in", S.city));
-  }
-
-  /* ---- Header "Get in touch" falls back to email when available -------- */
-  // (kept as an in-page anchor so the contact section is always reachable)
 
   /* ---- Sticky header state --------------------------------------------- */
   var nav = document.getElementById("nav");

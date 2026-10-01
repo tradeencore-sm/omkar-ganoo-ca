@@ -17,7 +17,7 @@ JavaScript, deployed as a static site on Vercel.
 | Experience | Practice · COPA-DATA India · Marathe Padhye & Athalye, plus education |
 | Tools | Links to the income tax calculator and HSN/SAC finder |
 | Training | Corporate lectures and in-house programmes |
-| Contact | Rendered from `site.config.js` |
+| Contact | Email, phone, LinkedIn and location — static HTML |
 
 ## Tools
 
@@ -45,24 +45,47 @@ thresholds and end use.
 
 ## Editing the site
 
-**All contact details live in one file: [`site.config.js`](site.config.js).**
+Everything is plain HTML — about copy, services, the Virtual CFO list, the
+experience timeline and the contact cards are all edited directly in
+[`index.html`](index.html).
 
-```js
-window.SITE = {
-  email:    "omkarganoo@yahoo.com",
-  phone:    "+91 84120 09546",
-  city:     "Chiplun & Pune, Maharashtra",
-  linkedin: "https://www.linkedin.com/in/caomkarganoo",
-  address:  "",   // full postal address — blank = show "Based in" city instead
-};
+**Contact details are deliberately written into the HTML**, not injected by
+JavaScript. They used to be rendered at runtime from a `site.config.js` file,
+which meant the email address and phone number were absent from the page
+source — invisible to every crawler that does not execute JavaScript, which is
+most AI crawlers. One nice-to-edit config file is not worth being unreachable.
+
+### Changing the domain
+
+The production domain is written into the canonical tags, `og:url`,
+`robots.txt`, `sitemap.xml`, `llms.txt` and `AGENTS.md`. A sitemap `<loc>` must
+be absolute or Search Console rejects the file, so this cannot be made
+relative. One command updates all of them:
+
+```bash
+node scripts/set-site-url.mjs https://omkarganoo.com
 ```
 
-Any value left as an empty string is **not rendered** — no blank cards, no
-placeholder text. The full postal address is deliberately left blank, since the
-address on the CV is residential; fill it in to publish an office address.
+It reads the current domain from `index.html`'s canonical tag and replaces that
+exact string everywhere, leaving third-party URLs (LinkedIn, the GST portal,
+Google Fonts) alone.
 
-Everything else — about copy, services, Virtual CFO list, experience timeline —
-is plain HTML in [`index.html`](index.html) and can be edited directly.
+## Search & AI discoverability
+
+- `robots.txt` names 20 crawlers explicitly, including GPTBot, OAI-SearchBot,
+  ClaudeBot, PerplexityBot, Google-Extended, Applebot-Extended and
+  meta-externalagent, so a future blanket "block bots" rule cannot quietly
+  remove answer-engine visibility.
+- `llms.txt` — a machine-readable summary of the practice, services, Virtual
+  CFO scope, both tools and the citation terms.
+- `AGENTS.md` — agent-oriented: what the tools do, the exact shape of
+  `TaxEngine` and `HSN_DATA`, and **what the tools do not cover**, so an
+  assistant declines rather than guessing.
+- JSON-LD on every page: `Person` + `ProfessionalService` (with an eight-item
+  service catalogue) + `WebSite` on the home page; `WebApplication` +
+  `BreadcrumbList` + `FAQPage` on each tool page.
+- Canonical tags, `og:*` and Twitter card metadata, `en-IN` locale, and a
+  1200x630 Open Graph image at `assets/og.jpg`.
 
 ## Optional additions
 
@@ -102,12 +125,21 @@ Vercel as instructed there.
 ## Structure
 
 ```
-index.html        single page — all content + schema.org Person markup
-styles.css        design system + responsive layout
-script.js         nav, scroll reveal, contact rendering
-site.config.js    ← contact details live here
-assets/           favicon + Open Graph share image
-vercel.json       headers, clean URLs
-robots.txt        crawlable
-sitemap.xml
+index.html             home page — all content + JSON-LD
+styles.css             design system + responsive layout
+script.js              nav, scroll reveal, sticky header
+tools/
+  income-tax-calculator.html
+  hsn-finder.html
+  tax-engine.js        all tax rates live in the RATES object here
+  tax-engine.test.js   26 cases — `node tools/tax-engine.test.js`
+  hsn-data.js          144 HSN/SAC entries
+scripts/
+  set-site-url.mjs     stamp the production domain everywhere
+assets/                favicon, portrait, 1200x630 OG card
+robots.txt             20 crawlers named explicitly
+sitemap.xml            absolute URLs
+llms.txt               machine-readable practice summary
+AGENTS.md              agent-oriented tool manifest
+vercel.json            clean URLs, caching, headers, markdown MIME type
 ```

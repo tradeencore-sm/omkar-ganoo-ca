@@ -1,16 +1,63 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Income Tax Calculator FY 2026-27 (AY 2027-28) — CA Omkar Ganoo</title>
 <meta name="description" content="Free income tax calculator for FY 2026-27 (AY 2027-28). Compare the new and old regimes, with standard deduction, Section 87A rebate, marginal relief, surcharge and cess." />
+<link rel="canonical" href="https://omkar-ganoo-ca.vercel.app/tools/income-tax-calculator" />
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+<meta name="theme-color" content="#0d1b2a" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://omkar-ganoo-ca.vercel.app/tools/income-tax-calculator" />
+<meta property="og:site_name" content="CA Omkar Ganoo" />
+<meta property="og:locale" content="en_IN" />
+<meta property="og:title" content="Income Tax Calculator FY 2026-27" />
+<meta property="og:description" content="Free income tax calculator for FY 2026-27 (AY 2027-28). Compares the new and old regimes with standard deduction, Section 87A rebate, marginal relief, surcharge and cess." />
+<meta property="og:image" content="https://omkar-ganoo-ca.vercel.app/assets/og.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/styles.css" />
-<script src="/site.config.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Income Tax Calculator FY 2026-27",
+      "url": "https://omkar-ganoo-ca.vercel.app/tools/income-tax-calculator",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "inLanguage": "en-IN",
+      "description": "Free income tax calculator for FY 2026-27 (AY 2027-28). Compares the new and old regimes with standard deduction, Section 87A rebate, marginal relief, surcharge and cess.",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+      "author": { "@id": "https://omkar-ganoo-ca.vercel.app/#person" },
+      "publisher": { "@id": "https://omkar-ganoo-ca.vercel.app/#person" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://omkar-ganoo-ca.vercel.app/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://omkar-ganoo-ca.vercel.app/#tools" },
+        { "@type": "ListItem", "position": 3, "name": "Income Tax Calculator" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What are the income tax slabs for FY 2026-27 under the new regime?", "acceptedAnswer": { "@type": "Answer", "text": "Up to Rs 4 lakh is nil, Rs 4-8 lakh is 5%, Rs 8-12 lakh is 10%, Rs 12-16 lakh is 15%, Rs 16-20 lakh is 20%, Rs 20-24 lakh is 25%, and income above Rs 24 lakh is taxed at 30%." } },
+        { "@type": "Question", "name": "Is income up to Rs 12 lakh tax-free under the new regime?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The Section 87A rebate of up to Rs 60,000 reduces the tax to nil for a total income up to Rs 12 lakh. For a salaried person the Rs 75,000 standard deduction raises that to Rs 12.75 lakh of gross salary." } },
+        { "@type": "Question", "name": "What is the surcharge rate under the new tax regime?", "acceptedAnswer": { "@type": "Answer", "text": "10% above Rs 50 lakh, 15% above Rs 1 crore and 25% above Rs 2 crore. The new regime caps surcharge at 25%, unlike the old regime which goes to 37% above Rs 5 crore." } }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -104,7 +151,7 @@
           income from more than one house property, clubbing, set-off of losses, foreign
           income or relief under Sections&nbsp;89, 90 or 91. It is not tax advice and does not
           create a client relationship.
-          <span id="discContact"></span>
+          For a computation you can rely on, <a href="/#contact">get in touch</a>.
         </div>
       </div>
 
@@ -229,12 +276,6 @@
     r.addEventListener("change", render);
   });
   document.getElementById("taxForm").addEventListener("submit", function(e){ e.preventDefault(); });
-
-  var S = window.SITE || {};
-  if (S.email){
-    document.getElementById("discContact").innerHTML =
-      ' For a computation you can rely on, <a href="/#contact">get in touch</a>.';
-  }
 
   render();
 })();

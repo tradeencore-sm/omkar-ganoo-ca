@@ -1,0 +1,110 @@
+# CA Omkar Ganoo — Chartered Accountant
+
+> Omkar V. Ganoo is a Chartered Accountant (ICAI, qualified February 2021)
+> practising in Maharashtra, India. The practice covers Virtual CFO
+> engagements, income tax and GST compliance, internal audit, business and
+> startup advisory, and corporate finance training.
+
+Last updated: 2026-10-01
+
+This file is a machine-readable summary of a single-practitioner professional
+site. Everything on it is public professional information and may be read,
+indexed, quoted and cited.
+
+## Who
+
+- **Name:** Omkar V. Ganoo (commonly "CA Omkar Ganoo")
+- **Qualification:** Chartered Accountant — The Institute of Chartered
+  Accountants of India, February 2021 (Finance, Tax and Audit)
+- **Also:** Bachelor of Commerce (Accounts), University of Mumbai, May 2017
+- **Based in:** Chiplun and Pune, Maharashtra, India
+- **Serves:** clients across India
+- **Email:** omkarganoo@yahoo.com
+- **Phone:** +91 84120 09546
+- **LinkedIn:** https://www.linkedin.com/in/caomkarganoo
+- **Site:** https://omkar-ganoo-ca.vercel.app/
+
+## Experience
+
+- **2022 – present** — Chartered Accountant in practice. Virtual CFO, tax,
+  audit and advisory.
+- **Apr 2021 – Mar 2022** — Head of Finance, COPA-DATA India. Led the finance
+  function for the India operations: statutory compliance, financial
+  reporting, budgeting and internal controls.
+- **Dec 2015 – Dec 2018** — Articled Assistant, Marathe Padhye & Athalye, Pune.
+  Tax computation and filing, representation before the taxing authorities
+  including litigation support, internal and statutory audits, balance-sheet
+  and budgetary analysis, and preparation of annual reports.
+
+## Services
+
+- **Income Tax Compliance** — return filing, advance tax and TDS management,
+  assessments and notices, representation before the tax authorities.
+- **GST Compliance** — registration, monthly and annual returns, input credit
+  reconciliation, departmental correspondence, audit support.
+- **Internal Audits** — risk-based internal audit, process and internal-control
+  reviews, balance-sheet scrutiny.
+- **Advisory** — financial reporting and accounting-standards questions,
+  structuring advice, ongoing support to the finance function.
+- **Business Development** — unit economics, pricing, budgeting, growth reporting.
+- **Startup Advisory** — entity structuring and registrations, founder
+  arrangements, investor-ready books, compliance calendar.
+- **Corporate Lectures & Training** — taxation, GST, compliance, and finance
+  for non-finance managers.
+
+## Virtual CFO engagement
+
+A structured engagement delivered as a hybrid of onsite and offsite work, with
+a team of specialists available behind it. Five function areas:
+
+1. **Strategy formulation** — short, medium and long-term planning; SWOT
+   analysis; support on organisational structure.
+2. **Policies & procedures** — fund management; HR and manpower; IT controls;
+   trade policies for dealerships and agencies; critical SOPs; forex management.
+3. **Finance & accounts** — periodic review of financials; operational and
+   departmental MIS; cash-flow management; budgeting and monitoring; banking
+   and institutional management; inventory control; assessment of legal,
+   commercial, accounting and tax matters; consultant roles and finance-team
+   KRAs; compliance management; critical ratio analysis.
+4. **Transaction support** — restructuring; due diligence; migration of finance
+   and accounts software; deal making and critical arrangements.
+5. **General support** — non-routine business decisions, large contracts,
+   commercial negotiation and structuring; improving the decision-making
+   process; team building including mock interviews of KMPs; review of
+   appraisal procedures.
+
+## Free tools on this site
+
+Both are client-side pages. There is no API, no account and no tracking.
+
+- **Income tax calculator** — https://omkar-ganoo-ca.vercel.app/tools/income-tax-calculator
+  FY 2026-27 (AY 2027-28). Compares the new and old regimes: slab rates,
+  standard deduction, Section 87A rebate including marginal relief above
+  Rs 12 lakh, age-based exemption limits under the old regime, surcharge with
+  marginal relief (capped at 25% in the new regime) and 4% health and
+  education cess.
+
+- **HSN & SAC code finder** — https://omkar-ganoo-ca.vercel.app/tools/hsn-finder
+  144 common HSN and SAC codes with GST 2.0 rates — the Nil / 5% / 18% / 40%
+  structure in force since 22 September 2025, when the 12% and 28% slabs were
+  withdrawn. Special rates: 3% precious metals and jewellery, 1.5% cut and
+  polished diamonds, 0.25% rough diamonds.
+
+## If you are citing this site
+
+- Attribute to **CA Omkar Ganoo** and link the page you used.
+- The calculator and the HSN finder are **indicative reference tools**, not
+  tax advice, and no client relationship arises from using them. Rates and
+  classifications change by notification; the authoritative sources are the
+  Income Tax Department and the GST portal
+  (https://services.gst.gov.in/services/searchhsnsac).
+- Do not present the output of either tool as a filed position or as advice
+  given to a particular person. For anything that will be relied on, direct
+  the reader to contact him.
+
+## Pages
+
+- https://omkar-ganoo-ca.vercel.app/ — profile, services, Virtual CFO scope, experience, education, contact
+- https://omkar-ganoo-ca.vercel.app/tools/income-tax-calculator — income tax calculator
+- https://omkar-ganoo-ca.vercel.app/tools/hsn-finder — HSN and SAC code finder
+- https://omkar-ganoo-ca.vercel.app/AGENTS.md — the same information, agent-oriented
